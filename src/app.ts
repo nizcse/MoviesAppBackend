@@ -1,10 +1,13 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 import { movies } from './routes/movies';
+// import {PORT} from '@env'
 const app = express();
-const port = 3000;
-
+const port = process.env.PORT;
+// console.log(PORT)
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('namaste World!');
 });
 
 app.get('/movies',movies)
