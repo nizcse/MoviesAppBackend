@@ -16,6 +16,7 @@ A **Node.js** back-end service for the Movies App, built to manage movies and fa
 - **TypeScript**
 - **Concurrently** (for running tasks simultaneously)
 - **nodemon** (for development)
+- **dotenv** (for environment variable management)
 
 ## Installation
 
@@ -26,11 +27,15 @@ A **Node.js** back-end service for the Movies App, built to manage movies and fa
    ```
 
 2. Install dependencies:
-   ```bash
+   ```sh
    npm install
    ```
 
 3. Set up environment variables:
+   - Install **dotenv**:
+     ```sh
+     npm install dotenv ts-node
+     ```
    - Create a `.env` file in the root directory.
    - Add the following variables:
      ```env
@@ -40,7 +45,7 @@ A **Node.js** back-end service for the Movies App, built to manage movies and fa
      ```
 
 4. Start the server:
-   ```bash
+   ```sh
    npm start
    ```
    This will:
@@ -70,14 +75,14 @@ The `start` script uses **Concurrently** to:
 - Restart the server automatically using **nodemon**.
 
 Run the following command for development:
-```bash
+```sh
 npm start
 ```
 
 ### Linting
 
 This project uses ESLint for linting. Run the following command to check for linting errors:
-```bash
+```sh
 npm run lint
 ```
 
