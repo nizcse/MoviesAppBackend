@@ -99,3 +99,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 ---
 
 This back-end service is designed to complement the front-end Movies App, providing robust and scalable API support.
+
+## Note
+
+Add database (MongoDB) on your own.
