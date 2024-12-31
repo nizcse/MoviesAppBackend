@@ -1,3 +1,6 @@
+import { ObjectId, WithId } from "mongodb";
+import { collections } from "../services/database.service";
+import movies from "../models/movies";
 const movieData :Movie[] = 
 [
     {
@@ -528,7 +531,43 @@ const movieData :Movie[] =
       "website": "https://movies.disney.com/the-lion-king"
     }
   ];
-const movies = (req,res) => { 
-    res.send(movieData)
+const getMovies = async (req,res) => { 
+  let search = req.query.search;
+  let query = {}
+  
+  if (search) {
+    query = {
+      $or: [
+        { title: { $regex: search, $options: 'i' } }, // Case-insensitive search on 'name' field
+      ],
+    };
+  }
+  console.log(search,'search')
+  const Movies:Movie[] = (await collections.movies.find(query).toArray()) as WithId<movies>[];
+  console.log(Movies,'search')
+    res.send(Movies)
 }
-export  {movies};
+const getMoviesById = async (req,res) => { 
+  let id = req.params.id
+  if(Number.isNaN(id)||id<0){
+    res.status(400).send("Id is not correct")
+  }
+  const Movies:Movie = (await collections.movies.findOne({id})) as WithId<movies>;
+  console.log(Movies,'id')
+    res.send(Movies)
+}
+const postMovies = async (req,res) => {
+  try {
+    const newMovie = req.body as movies;
+    console.log(newMovie)
+    const result = await collections.movies.insertOne(newMovie);
+
+    result
+        ? res.status(201).send(`Successfully created a new game with id ${result.insertedId}`)
+        : res.status(500).send("Failed to create a new game.");
+} catch (error) {
+    console.error(error);
+    res.status(400).send(error.message);
+}
+}
+export  {getMovies,getMoviesById,postMovies};
